@@ -1,0 +1,19 @@
+.bPage{
+    position: relative;
+}
+
+.bPage-Text{
+    position: absolute;
+    font-size: 20px;
+    top : 100px;
+    justify-content: center;
+}
+
+.Home-link{
+    background: #9951d5;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 4px 10px;
+    border-radius: 10%;
+}

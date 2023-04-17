@@ -1,0 +1,19 @@
+.parent{
+    display: grid;
+    /*border: 2px solid black;*/
+    width : 60%;
+    height: 23vh;
+    margin: 0 20%;
+    grid-template-columns: 1fr 1fr 1fr ;
+    grid-gap: 5%;
+}
+.HomeDown-list{
+    list-style: none;
+    color: lightslategray;
+}
+.HomeDown-list > li{
+    margin-top: 2px;
+}
+.HomeDown-list>li>img{
+    width: 20vh;
+}

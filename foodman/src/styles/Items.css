@@ -1,0 +1,22 @@
+.page{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.item-list{
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+}
+.item-filters{
+    border: 2px solid black;
+}
+
+.item-card{
+    margin: 23px;
+}
+
+
