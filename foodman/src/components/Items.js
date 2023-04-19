@@ -1,8 +1,11 @@
 import Navbar from "./Appbar";
+import HomeDown from "./Home-down";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 import '../styles/Items.css'
+import '../styles/styles.scss'
+
 import { useNavigate } from "react-router-dom";
 
 //This is comment
@@ -10,15 +13,20 @@ const url = 'http://localhost:8000/items';
 function Items() {
     const [items, setItems] = useState([]);
     const [cart, setCart] = useState([]);
+    const [name, setName] = useState('');
+    const [priceMax, setPriceMax] = useState(1000);
+    const [priceMin, setPriceMin] = useState(0);
+
+    let arr = [];
 
     async function fetchData() {
         let temp = await axios(url);
-        console.log(temp);
-        await setItems(temp.data.data.items);
 
+        await setItems(temp.data.data.items);
+        arr = temp.data.data.items;
 
         const userId = localStorage.getItem('id');
-        if (userId && userId != -1) {
+        if (userId && userId !== -1) {
 
             const url2 = `http://localhost:8000/user/${userId}`;
 
@@ -26,10 +34,10 @@ function Items() {
             const user = response.data.data.user;
 
             await setCart(user.cart);
-            console.log(cart[0], items[5]._id);
 
         }
-        await []
+
+
 
 
 
@@ -51,7 +59,7 @@ function Items() {
             let value;
             cart.includes(id) ? value = -1 : value = 1;
             console.log(value);
-            const response = await axios.patch(url2, {
+            await axios.patch(url2, {
                 cart: id,
                 value: value
             });
@@ -72,19 +80,57 @@ function Items() {
         }
     }
 
+    const handleFilter = async () => {
+        await setItems(arr)
+        let temp = items.filter((item) => {
+            let t1 = item.name.includes(name);
+            let t2 = item.price >= priceMin && item.price <= priceMax;
+
+            return t1 && t2;
+        })
+
+        await setItems([...temp])
+    }
+
+
     return (
         <>
             <Navbar />
 
             <div className="page">
                 <div className="item-filters">
+                    <input type="text" placeholder="Search" className="searchbox"
+                        value={name}
+                        onChange={(e) => {
+                            setName(e.target.value)
+                        }}
+                    />
+                    <label>Price Range</label>
+
+                    <div className="price-range">
+                        <label>Min : </label>
+                        <input type="number"
+                            value={priceMin}
+                            onChange={(e) => setPriceMin(e.target.value)}
+                        />
+                        <label>Max : </label>
+                        <input type="number"
+                            value={priceMax}
+                            onChange={(e) => setPriceMax(e.target.value)}
+                        />
+                    </div>
+                    <div><button
+                        className="btn btn-warning"
+
+                        onClick={handleFilter}
+                    >Apply changes</button></div>
 
                 </div>
                 <div className="item-list">
                     {
                         !items ?
                             (
-                                <div className="spinner-border" role="status">
+                                <div className="spinner-border" role="status" style={{ alignSelf: 'center' }}>
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             )
@@ -116,7 +162,7 @@ function Items() {
                 </div>
             </div>
 
-
+            <HomeDown />
         </>
     );
 }

@@ -1,19 +1,18 @@
 .page{
     display: grid;
     grid-template-columns: 1fr 4fr;
+    border-bottom: 1px solid gray;
 }
 
 .item-list{
-    border: 2px solid black;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    border-left: 1px solid gray;
     
-}
-.item-filters{
-    border: 2px solid black;
-}
+}   
 
 .item-card{
     margin: 23px;
