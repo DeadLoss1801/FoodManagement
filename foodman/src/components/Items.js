@@ -17,13 +17,12 @@ function Items() {
     const [priceMax, setPriceMax] = useState(1000);
     const [priceMin, setPriceMin] = useState(0);
 
-    let arr = [];
+    // let arr = [];
 
     async function fetchData() {
         let temp = await axios(url);
 
         await setItems(temp.data.data.items);
-        arr = temp.data.data.items;
 
         const userId = localStorage.getItem('id');
         if (userId && userId !== -1) {
@@ -47,13 +46,13 @@ function Items() {
 
     useEffect(() => {
         fetchData()
-    }, []);
+    }, [name]);
 
 
     const navigate = useNavigate();
     const handleCart = async (id) => {
         const userId = localStorage.getItem('id');
-        if (userId && userId != -1) {
+        if (userId && userId !== -1) {
 
             const url2 = `http://localhost:8000/user/${userId}`;
             let value;
@@ -81,7 +80,7 @@ function Items() {
     }
 
     const handleFilter = async () => {
-        await setItems(arr)
+        console.log(items);
         let temp = items.filter((item) => {
             let t1 = item.name.includes(name);
             let t2 = item.price >= priceMin && item.price <= priceMax;
