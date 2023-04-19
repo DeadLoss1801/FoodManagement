@@ -1,6 +1,6 @@
 import Navbar from "./Appbar";
 import '../styles/Cart.css'
-
+import '../styles/styles.scss'
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -69,7 +69,7 @@ function Cart() {
 
     return (
         <>
-            <Navbar />
+            {/* <Navbar />
             <div className="cart-container">
 
                 <div className="right cart-child">
@@ -113,7 +113,48 @@ function Cart() {
                     <h5>Total : {total}</h5>
                 </div>
 
+            </div> */}
+
+            <div className="cart">
+                <Navbar />
+                <div className="cart-Page">
+                    <div className="Cart">
+                        <h1>Shopping Cart</h1>
+                        <hr />
+                        <table>
+                            <thead>
+                                <th></th>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Remove</th>
+                            </thead>
+                            <tbody>
+                                {
+                                    items.map((item) => (
+                                        <tr>
+                                            <td><img src={item.item_img} alt="product" /> </td>
+                                            <td>{item.name}</td>
+                                            <td>{item.description}</td>
+                                            <td>Rs.{item.price}/-</td>
+                                            <td>1</td>
+                                            <td><button className=" btn-warning btn"
+                                                onClick={() => handleClick(item._id)}
+                                            >Remove</button></td>
+                                        </tr>
+                                    ))
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
             </div>
+
+
         </>
     );
 

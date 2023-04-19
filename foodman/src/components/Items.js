@@ -25,7 +25,8 @@ function Items() {
         await setItems(temp.data.data.items);
 
         const userId = localStorage.getItem('id');
-        if (userId && userId !== -1) {
+        console.log(typeof (userId), userId);
+        if (userId && userId !== '-1') {
 
             const url2 = `http://localhost:8000/user/${userId}`;
 
@@ -52,7 +53,7 @@ function Items() {
     const navigate = useNavigate();
     const handleCart = async (id) => {
         const userId = localStorage.getItem('id');
-        if (userId && userId !== -1) {
+        if (userId && userId != -1) {
 
             const url2 = `http://localhost:8000/user/${userId}`;
             let value;
@@ -75,6 +76,7 @@ function Items() {
 
 
         } else {
+            console.log('hi');
             navigate('/login')
         }
     }
