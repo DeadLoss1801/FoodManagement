@@ -50,7 +50,7 @@ body{
        justify-content: center;
        align-items: center;
        .Cart{
-           border: 1px solid gray;
+        //    border: 1px solid gray;
            width:85vw;
            margin-top: 5vh;
         //    height: 75vh;
@@ -80,6 +80,40 @@ body{
                         border-bottom: 1px solid gray;
 
                     }
+                }
+           }
+           .bill{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                table{
+                    border: none;
+                    width : 30vw;
+                    font-weight: bold;
+                    .subtotal{
+                        border-bottom: 1px solid gray;
+                    }
+                }
+                .buy-button{
+                    width: 30vw;
+                    display: flex;
+                    justify-content: center;
+                    button{
+                        width : 20vw;
+                        // width : 6vw;
+                    }
+                }
+           }
+
+           .Empty{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                img{
+                    width : 40vw;
+                }
+                .itemsLink{
+                    color: blue;
                 }
            }
     

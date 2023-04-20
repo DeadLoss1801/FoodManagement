@@ -3,6 +3,7 @@ import '../styles/Cart.css'
 import '../styles/styles.scss'
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -66,54 +67,10 @@ function Cart() {
 
 
     useEffect(() => fetchData, [])
-
+    const path = `https://assets.materialup.com/uploads/66fb8bdf-29db-40a2-996b-60f3192ea7f0/preview.png`
     return (
         <>
-            {/* <Navbar />
-            <div className="cart-container">
 
-                <div className="right cart-child">
-                    {
-                        items.map((item) => (
-                            <div className="cart-list">
-                                <div className="cart-list-img">
-                                    <img src={item.item_img} alt={item.name} />
-                                </div>
-                                <div className="cart-list-content">
-                                    <h5>{item.name}</h5>
-                                    <p>Price : Rs {item.price}/-</p>
-
-                                </div>
-
-                                <div>
-                                    <h5>Restaurant : {item.rest_name}</h5>
-                                    <p>{item.description}</p>
-                                    <p>Rating : {item.rating}</p>
-                                </div>
-                                <div className="cart-list-button ">
-                                    <button className=" btn-warning btn"
-                                        onClick={() => handleClick(item._id)}
-                                    >Remove</button>
-                                </div>
-                            </div>
-                        ))
-                    }
-                </div>
-                <div className="left cart-child">
-                    <h4>Your order</h4>
-
-                    {
-                        items.map((item) => (
-                            <div >
-                                <p>{item.name} {item.price}</p>
-                            </div>
-                        ))
-                    }
-                    <hr />
-                    <h5>Total : {total}</h5>
-                </div>
-
-            </div> */}
 
             <div className="cart">
                 <Navbar />
@@ -121,41 +78,78 @@ function Cart() {
                     <div className="Cart">
                         <h1>Shopping Cart</h1>
                         <hr />
-                        <table>
-                            <thead>
-                                <th></th>
-                                <th>Product</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Remove</th>
-                            </thead>
-                            <tbody>
-                                {
-                                    items.map((item) => (
-                                        <tr>
-                                            <td><img src={item.item_img} alt="product" /> </td>
-                                            <td>{item.name}</td>
-                                            <td>{item.description}</td>
-                                            <td>Rs.{item.price}/-</td>
-                                            <td>1</td>
-                                            <td><button className=" btn-warning btn"
-                                                onClick={() => handleClick(item._id)}
-                                            >Remove</button></td>
-                                        </tr>
-                                    ))
-                                }
+                        {
+                            total !== 0 ?
+                                (
+                                    <>
+                                        <table>
+                                            <thead>
+                                                <th></th>
+                                                <th>Product</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Remove</th>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    items.map((item) => (
+                                                        <tr>
+                                                            <td><img src={item.item_img} alt="product" /> </td>
+                                                            <td>{item.name}</td>
+                                                            <td>{item.description}</td>
+                                                            <td>Rs.{item.price}/-</td>
+                                                            <td>1</td>
+                                                            <td><button className=" btn-warning btn"
+                                                                onClick={() => handleClick(item._id)}
+                                                            >Remove</button></td>
+                                                        </tr>
+                                                    ))
+                                                }
 
-                            </tbody>
-                        </table>
+                                            </tbody>
+                                        </table>
+
+                                        <div className="bill">
+                                            <table>
+                                                <tr>
+                                                    <td className="subtotal">Subtotal </td>
+                                                    <td className="subtotal">Rs.{total}/-</td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Total</td>
+                                                    <td>Rs.{total}/-</td>
+
+                                                </tr>
+                                            </table>
+                                            <div className="buy-button">
+                                                <button className="btn btn-warning">Buy</button>
+                                            </div>
+                                        </div>
+
+
+                                    </>
+
+
+                                )
+                                :
+                                (
+                                    <>
+                                        <div className="Empty">
+                                            <img src="https://assets.materialup.com/uploads/66fb8bdf-29db-40a2-996b-60f3192ea7f0/preview.png" alt="empty" />
+                                            <NavLink to={'/items'} className={'itemsLink'}> Back to Shopping</NavLink>
+                                        </div>
+                                    </>
+                                )
+                        }
                     </div>
-
                 </div>
 
             </div>
 
-
         </>
+
     );
 
 }
