@@ -21,14 +21,20 @@ function Cart() {
 
 
             const response = await axios.get(url2);
-            let id = response.data.data.user.cart;
+            let names = response.data.data.user.cart;
             let x = 0;
 
-            for (let i = 0; i < id.length; i++) {
-                let url = `http://localhost:8000/items/${id[i]}`;
+
+            for (let i = 0; i < names.length; i++) {
+                let url = `http://localhost:8000/items/${names[i]}`;
+                console.log(url);
                 let temp = await axios.get(url)
-                temp = temp.data.data.item;
+                temp = temp.data.data.result[0];
+                console.log(temp);
+                console.log('Fetch');
                 x = x + temp.price
+                console.log(typeof (temp.price));
+                console.log(x);
                 arr.push(temp)
 
             }
@@ -50,12 +56,12 @@ function Cart() {
         console.log(response);
         let x = 0;
         let temp = items.filter((item) => {
-            if (item._id === id) {
+            if (item.item_name === id) {
                 x = item.price;
             }
-            return item._id !== id;
+            return item.item_name !== id;
         })
-
+        console.log('j');
         await setItem([...temp]);
         setTotal(total - x);
 
@@ -67,6 +73,8 @@ function Cart() {
 
 
     useEffect(() => fetchData, [])
+
+
     const path = `https://assets.materialup.com/uploads/66fb8bdf-29db-40a2-996b-60f3192ea7f0/preview.png`
     return (
         <>
@@ -96,12 +104,12 @@ function Cart() {
                                                     items.map((item) => (
                                                         <tr>
                                                             <td><img src={item.item_img} alt="product" /> </td>
-                                                            <td>{item.name}</td>
-                                                            <td>{item.description}</td>
+                                                            <td>{item.item_name}</td>
+                                                            <td>{item.item_description}</td>
                                                             <td>Rs.{item.price}/-</td>
                                                             <td>1</td>
                                                             <td><button className=" btn-warning btn"
-                                                                onClick={() => handleClick(item._id)}
+                                                                onClick={() => handleClick(item.item_name)}
                                                             >Remove</button></td>
                                                         </tr>
                                                     ))

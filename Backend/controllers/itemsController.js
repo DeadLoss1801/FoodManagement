@@ -2,7 +2,7 @@ const itemModel = require('../models/itemsModel')
 
 exports.getAllItems = async (req, res) => {
     try {
-        itemModel.query(`SELECT * FROM  ITEMS`, (err, result) => {
+        await itemModel.query(`SELECT * FROM  ITEMS`, (err, result) => {
             console.log(result);
 
 
@@ -26,7 +26,9 @@ exports.getAllItems = async (req, res) => {
 }
 exports.getItem = async (req, res) => {
     try {
-        itemModel.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = ${req.params.id}`, (err, result) => {
+        console.log('name', req.params.id);
+        await itemModel.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = '${req.params.id}'`, (err, result) => {
+            console.log(result);
             return res.status(200)
                 .json({
                     status: "Success",
@@ -51,7 +53,7 @@ exports.createItem = async (req, res) => {
         const { name, rest_name, rating, price, item_description, item_img } = req.body;
 
         console.log(req.body);
-        itemModel.query(`INSERT INTO ITEMS(ITEM_NAME,REST_NAME, RATING, PRICE, ITEM_DESCRIPTION , ITEM_IMG) VALUES ('${name}', '${rest_name}', ${rating}, ${price}, '${item_description}' ,' ${item_img}');`, (err, result) => {
+        await itemModel.query(`INSERT INTO ITEMS(ITEM_NAME,REST_NAME, RATING, PRICE, ITEM_DESCRIPTION , ITEM_IMG) VALUES ('${name}', '${rest_name}', ${rating}, ${price}, '${item_description}' ,' ${item_img}');`, (err, result) => {
 
             if (err) throw err;
 
@@ -79,7 +81,7 @@ exports.deleteItem = async (req, res) => {
     try {
 
 
-        itemModel.query(`DELETE FROM ITEMS WHERE ITEM_NAME = ${req.params.id}`, (err, result) => {
+        await itemModel.query(`DELETE FROM ITEMS WHERE ITEM_NAME = ${req.params.id}`, (err, result) => {
             return res.status(200)
                 .json({
                     status: "Suceess",

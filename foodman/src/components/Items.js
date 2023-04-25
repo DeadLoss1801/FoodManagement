@@ -34,7 +34,7 @@ function Items() {
             const user = response.data.data.user;
             console.log(user);
             await setCart(user.cart);
-
+            console.log(cart);
         }
 
 
@@ -52,6 +52,7 @@ function Items() {
 
     const navigate = useNavigate();
     const handleCart = async (id) => {
+        console.log('Handling cart');
         const userId = localStorage.getItem('id');
         if (userId && userId != -1) {
 
@@ -146,7 +147,7 @@ function Items() {
                                         <p>Restaurant : {item.rest_name}</p>
                                         <div>
                                             {
-                                                cart.includes(item._id) ?
+                                                cart.includes(item.item_name) ?
                                                     (
                                                         <button onClick={() => handleCart(item.item_name)} className="btn btn-warning">Remove to Cart</button>
                                                     )
