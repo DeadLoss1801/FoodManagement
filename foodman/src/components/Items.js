@@ -21,8 +21,8 @@ function Items() {
 
     async function fetchData() {
         let temp = await axios(url);
-
-        await setItems(temp.data.data.items);
+        console.log('Data', temp);
+        await setItems(temp.data.data.result);
 
         const userId = localStorage.getItem('id');
         console.log(typeof (userId), userId);
@@ -32,7 +32,7 @@ function Items() {
 
             const response = await axios.get(url2);
             const user = response.data.data.user;
-
+            console.log(user);
             await setCart(user.cart);
 
         }
@@ -84,7 +84,7 @@ function Items() {
     const handleFilter = async () => {
         console.log(items);
         let temp = items.filter((item) => {
-            let t1 = item.name.includes(name);
+            let t1 = item.item_name.includes(name);
             let t2 = item.price >= priceMin && item.price <= priceMax;
 
             return t1 && t2;
@@ -141,18 +141,18 @@ function Items() {
                                 <div className="card item-card" style={{ width: "14rem" }}>
                                     <img src={item.item_img} className="card-img-top" alt="..." style={{ height: '8rem' }} />
                                     <div className="card-body">
-                                        <h5 className="card-title">{item.name}</h5>
+                                        <h5 className="card-title">{item.item_name}</h5>
                                         <p>Price : {item.price}/-</p>
                                         <p>Restaurant : {item.rest_name}</p>
                                         <div>
                                             {
                                                 cart.includes(item._id) ?
                                                     (
-                                                        <button onClick={() => handleCart(item._id)} className="btn btn-warning">Remove to Cart</button>
+                                                        <button onClick={() => handleCart(item.item_name)} className="btn btn-warning">Remove to Cart</button>
                                                     )
                                                     :
                                                     (
-                                                        <button onClick={() => handleCart(item._id)} className="btn btn-warning">Add to Cart</button>
+                                                        <button onClick={() => handleCart(item.item_name)} className="btn btn-warning">Add to Cart</button>
                                                     )
                                             }
                                         </div>

@@ -1,37 +1,40 @@
-const itemsModel = require('../Models/itemsModel')
+const itemModel = require('../models/itemsModel')
 
 exports.getAllItems = async (req, res) => {
     try {
-        // get the items in this  variable
-        const items = await itemsModel.find();
+        itemModel.query(`SELECT * FROM  ITEMS`, (err, result) => {
+            console.log(result);
 
-        return res.status(200)
-            .json({
-                status: 'Success',
-                data: {
-                    items
-                }
-            })
+
+            return res.status(200)
+                .json({
+                    status: "Success",
+                    data: {
+                        result
+                    }
+                })
+        })
+
 
     } catch (e) {
         return res.status(400)
             .json({
-                status: 'Fail',
-                message: e
+                status: 'Faiel',
+                message: e.message
             })
     }
 }
 exports.getItem = async (req, res) => {
     try {
-        const item = await itemsModel.findById(req.params.id);
-
-        return res.status(200)
-            .json({
-                status: 'Success',
-                data: {
-                    item
-                }
-            })
+        itemModel.query(`SELECT * FROM ITEMS WHERE ITEM_NAME = ${req.params.id}`, (err, result) => {
+            return res.status(200)
+                .json({
+                    status: "Success",
+                    data: {
+                        result
+                    }
+                })
+        })
 
     } catch (e) {
         return res.status(400)
@@ -44,20 +47,25 @@ exports.getItem = async (req, res) => {
 
 exports.createItem = async (req, res) => {
     try {
-        // create an item
-        const item = await itemsModel.create(req.body);
-        console.log('Item has been created');
 
+        const { name, rest_name, rating, price, item_description, item_img } = req.body;
 
-        return res.status(200)
-            .json({
-                status: 'Success',
-                data: {
-                    item
-                }
-            })
+        console.log(req.body);
+        itemModel.query(`INSERT INTO ITEMS(ITEM_NAME,REST_NAME, RATING, PRICE, ITEM_DESCRIPTION , ITEM_IMG) VALUES ('${name}', '${rest_name}', ${rating}, ${price}, '${item_description}' ,' ${item_img}');`, (err, result) => {
+
+            if (err) throw err;
+
+            return res.status(200)
+                .json({
+                    status: "Success",
+                    data: {
+                        result
+                    }
+                })
+        })
 
     } catch (e) {
+        console.log(e);
         return res.status(400)
             .json({
                 status: 'Fail',
@@ -69,15 +77,15 @@ exports.createItem = async (req, res) => {
 
 exports.deleteItem = async (req, res) => {
     try {
-        const deletedItem = await itemsModel.findByIdAndDelete(req.params.id);
 
-        console.log(deletedItem);
 
-        return res.status(200)
-            .json({
-                status: 'Success',
-                data: null
-            })
+        itemModel.query(`DELETE FROM ITEMS WHERE ITEM_NAME = ${req.params.id}`, (err, result) => {
+            return res.status(200)
+                .json({
+                    status: "Suceess",
+                    data: null
+                })
+        })
 
     } catch (error) {
         return res.status(400)
