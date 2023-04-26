@@ -16,8 +16,8 @@ function Items() {
     const [name, setName] = useState('');
     const [priceMax, setPriceMax] = useState(1000);
     const [priceMin, setPriceMin] = useState(0);
-
-    // let arr = [];
+    const [restaurant, setRest] = useState('');
+    let arr = [];
 
     async function fetchData() {
         let temp = await axios(url);
@@ -47,7 +47,7 @@ function Items() {
 
     useEffect(() => {
         fetchData()
-    }, [name]);
+    }, [name, restaurant]);
 
 
     const navigate = useNavigate();
@@ -83,16 +83,22 @@ function Items() {
     }
 
     const handleFilter = async () => {
-        console.log(items);
+        // console.log(items);
+        await setItems(...arr);
         let temp = items.filter((item) => {
             let t1 = item.item_name.includes(name);
             let t2 = item.price >= priceMin && item.price <= priceMax;
-
-            return t1 && t2;
+            let t3 = item.rest_name.includes(restaurant);
+            return t1 && t2 && t3;
         })
+        arr = items;
 
         await setItems([...temp])
     }
+
+
+
+
 
 
     return (
@@ -119,6 +125,15 @@ function Items() {
                         <input type="number"
                             value={priceMax}
                             onChange={(e) => setPriceMax(e.target.value)}
+                        />
+                    </div>
+                    <div>
+
+                        <input type="text" placeholder="restaurants" className="searchbox"
+                            value={restaurant}
+                            onChange={(e) => {
+                                setRest(e.target.value)
+                            }}
                         />
                     </div>
                     <div><button

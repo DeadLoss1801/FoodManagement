@@ -132,7 +132,8 @@ function Cart() {
                                                 </tr>
                                             </table>
                                             <div className="buy-button">
-                                                <button className="btn btn-warning">Buy</button>
+                                                <button className="btn btn-warning">Dine In</button>
+                                                <button className="btn btn-warning">Takeaway</button>
                                             </div>
                                         </div>
 

@@ -1,6 +1,6 @@
 .page{
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1.7fr 6fr;
     border-bottom: 1px solid gray;
 }
 
