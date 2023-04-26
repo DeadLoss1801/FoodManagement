@@ -1,10 +1,12 @@
 // <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1284146.7224317475!2d72.60557529863249!3d23.22571502537683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1681704759277!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
+import { useState } from "react";
 import Navbar from "./Appbar";
 import HomeDown from "./Home-down";
 
 
 function Contact() {
+    const [alerting, setAlert] = useState(false);
     return (
         <>
             <Navbar />
@@ -29,7 +31,21 @@ function Contact() {
                             <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
                             <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                         </div>
-                        <button class="text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg">Submit</button>
+                        <button class="text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg"
+                            onClick={() => setAlert(true)}
+                        >Submit</button>
+                        {
+                            alerting ?
+                                (
+                                    <div class="alert alert-success" role="alert" >
+                                        Email has been sent!
+                                    </div>
+                                )
+                                :
+                                (
+                                    <></>
+                                )
+                        }
                         <p class="text-xs text-gray-500 mt-3">submit your feedback</p>
                     </div>
                 </div>

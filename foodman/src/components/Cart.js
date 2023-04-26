@@ -3,7 +3,7 @@ import '../styles/Cart.css'
 import '../styles/styles.scss'
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 
 
@@ -12,6 +12,8 @@ function Cart() {
     const [items, setItem] = useState([]);
     let arr = [];
     const [total, setTotal] = useState(0);
+    const navigate = useNavigate();
+
 
     const fetchData = async () => {
         const userId = localStorage.getItem('id');
@@ -69,6 +71,33 @@ function Cart() {
 
     }
 
+    const onPurchase = async (num) => {
+        try {
+            let order;
+            if (num == 1) {
+                order = 'Dine-in'
+            } else {
+                order = 'TakeAway'
+            }
+
+            let arr = [];
+            items.map((o) => {
+                arr.push(o.item_name)
+            })
+            await axios.post('http://localhost:8000/purchase', {
+                rest_name: items[0].rest_name,
+                cust_name: localStorage.getItem('name'),
+                price: total,
+                order_type: order,
+                food_items: arr
+
+            })
+            console.log('success');
+            navigate('/');
+        } catch (error) {
+            console.log('ERROR');
+        }
+    }
 
 
 
@@ -132,8 +161,9 @@ function Cart() {
                                                 </tr>
                                             </table>
                                             <div className="buy-button">
-                                                <button className="btn btn-warning">Dine In</button>
-                                                <button className="btn btn-warning">Takeaway</button>
+                                                <button className="btn btn-warning" onClick={() => onPurchase(1)}>Dine In</button>
+                                                <button className="btn btn-warning"
+                                                    onClick={() => onPurchase(-1)}>Takeaway</button>
                                             </div>
                                         </div>
 

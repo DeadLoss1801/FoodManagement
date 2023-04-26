@@ -13,11 +13,14 @@ app.use(
 
 
 
-const itemsRouter = require('./routes/itemsRouter')
-const userRouter = require('./routes/userRouter')
-app.use('/items', itemsRouter);
+const itemsRouter = require('./routes/itemsRouter');
+const userRouter = require('./routes/userRouter');
+const purchaseRouter = require('./routes/purchaseRouter');
 
+
+app.use('/items', itemsRouter);
 app.use('/user', userRouter)
+app.use('/purchase', purchaseRouter);
 
 
 
